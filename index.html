@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine? Takia 💖</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    font-family:'Arial',sans-serif;
+    background:linear-gradient(45deg,#ff6b9d,#c44569,#f8b500,#ff9ff3);
+    background-size:400% 400%;
+    animation:bg 12s ease infinite;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+@keyframes bg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.hearts{position:absolute;width:100%;height:100%;z-index:1}
+.heart{position:absolute;font-size:22px;animation:float 6s linear infinite}
+@keyframes float{0%{transform:translateY(100vh);opacity:0}50%{opacity:1}100%{transform:translateY(-100px);opacity:0}}
+.container{text-align:center;z-index:5}
+h1{font-size:2.8em;color:white;text-shadow:0 0 20px #ff69b4;margin-bottom:1.5em}
+.buttons{display:flex;gap:2em;justify-content:center}
+button{padding:1em 2em;font-size:1.4em;border:none;border-radius:50px;cursor:pointer}
+#yes{background:linear-gradient(45deg,#ff1493,#ff69b4);color:white}
+#no{background:linear-gradient(45deg,#ffd6d6,#ffb6c1)}
+
+.celebration{display:none;flex-direction:column;align-items:center;text-align:center;z-index:10}
+.message{font-size:3em;text-shadow:0 0 20px white;color:#ff1493;animation:beatPulse 1s infinite;}
+@keyframes beatPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+p{color:white;font-size:1.4em;margin-top:1em;max-width:500px;text-align:center}
+
+.couple-img{width:200px;height:200px;border-radius:50%;margin:1em;animation:glow 2s infinite alternate;box-shadow:0 20px 40px rgba(255,105,180,0.5);}
+@keyframes glow{from{box-shadow:0 20px 40px rgba(255,105,180,0.5)}to{box-shadow:0 20px 60px rgba(255,20,147,0.8)}}
+
+/* Floating lyrics */
+.lyric{position:fixed;bottom:-50px;left:50%;transform:translateX(-50%);font-size:2em;color:white;text-shadow:0 0 20px #ff69b4;animation:lyricFloat 6s ease forwards;z-index:20}
+@keyframes lyricFloat{0%{opacity:0;bottom:-50px}30%{opacity:1}100%{opacity:0;bottom:60%}}
+
+/* Heart explosion */
+.explode-heart{position:fixed;font-size:30px;animation:explode 1.5s ease-out forwards;z-index:30}
+@keyframes explode{0%{transform:scale(0) translateY(0);opacity:1}100%{transform:scale(2) translateY(-200px);opacity:0}}
+
+@media(max-width:768px){h1{font-size:2em}button{font-size:1.2em}.lyric{font-size:1.5em}.couple-img{width:150px;height:150px}}
+</style>
+</head>
+<body>
+
+<!-- Autoplay + muted -->
+<audio id="music" autoplay loop muted>
+    <source src="raabta-piano.mp3" type="audio/mpeg">
+</audio>
+<audio id="celeMusic" autoplay loop muted>
+    <source src="raabta-romantic.mp3" type="audio/mpeg">
+</audio>
+
+<div class="hearts" id="hearts"></div>
+
+<div class="container" id="question">
+    <h1>Will you be my Valentine, Takia? 💖</h1>
+    <div class="buttons">
+        <button id="yes">Yes 💕</button>
+        <button id="no">No 😏</button>
+    </div>
+</div>
+
+<div class="celebration" id="celebration">
+    <h1 class="message">Yay! ❤️</h1>
+    <p>Takia, তুমি আমার জীবনের সবচেয়ে সুন্দর অনুভূতি 🌹<br>Every heartbeat chooses you 💕</p>
+    <img src="YOUR_IMAGE_HERE" class="couple-img" alt="Cute Couple">
+</div>
+
+<script>
+// Background hearts
+function heart(){const h=document.createElement('div');h.className='heart';h.innerHTML=['❤️','💖','💕','💝','✨'][Math.floor(Math.random()*5)];h.style.left=Math.random()*100+'%';h.style.animationDuration=(Math.random()*3+3)+'s';document.getElementById('hearts').appendChild(h);setTimeout(()=>h.remove(),6000);}
+setInterval(heart,250);
+
+// Audio
+const music=document.getElementById('music');
+const celeMusic=document.getElementById('celeMusic');
+
+// Gradually unmute and fade-in
+setTimeout(()=>{
+    let v = 0;
+    const fadeIn = setInterval(()=>{
+        if(v<0.5){
+            v += 0.01;
+            music.volume = v;
+            music.muted = false;
+        } else clearInterval(fadeIn)
+    },100);
+}, 500);
+
+// No button impossible
+const no=document.getElementById('no');
+no.addEventListener('mouseenter',()=>{no.style.position='fixed';no.style.left=Math.random()*(window.innerWidth-120)+'px';no.style.top=Math.random()*(window.innerHeight-60)+'px';});
+
+// Floating lyrics
+function showLyric(text){const l=document.createElement('div');l.className='lyric';l.innerText=text;document.body.appendChild(l);setTimeout(()=>l.remove(),6000);}
+
+// Heart explosion
+function heartExplosion(){for(let i=0;i<30;i++){const h=document.createElement('div');h.className='explode-heart';h.innerHTML=['❤️','💖','🌹','✨'][Math.floor(Math.random()*4)];h.style.left=Math.random()*100+'%';h.style.top='70%';document.body.appendChild(h);setTimeout(()=>h.remove(),1500);}}
+
+// Romantic lyrics
+const lyrics=[
+    "Takia, তুমি আমার জীবনের সবচেয়ে সুন্দর অনুভূতি 🌹",
+    "Every heartbeat chooses you 💕",
+    "তুমি আমার রাব্তা, আমার প্রেমের গান 🎶",
+    "Forever together, my love ❤️",
+    "Without you, I'm nothing 😘"  // <-- Updated line
+];
+
+// Chorus beat drop
+const CHORUS_TIME=42;
+music.addEventListener('timeupdate',()=>{
+    if(music.currentTime>=CHORUS_TIME && !music.chorusHit){
+        music.chorusHit=true;
+        lyrics.forEach((line,i)=>{setTimeout(()=>showLyric(line),i*2000)});
+        music.volume=0.85;
+        heartExplosion();
+    }
+});
+
+// YES button
+document.getElementById('yes').addEventListener('click',()=>{
+    heartExplosion();
+    let boost=music.volume;
+    const volUp=setInterval(()=>{if(boost<0.75){boost+=0.02;music.volume=boost}else clearInterval(volUp)},100);
+
+    setTimeout(()=>{
+        music.pause();
+        celeMusic.play();
+        let cv=0;
+        const celeFade=setInterval(()=>{if(cv<0.85){cv+=0.02;celeMusic.volume=cv}else clearInterval(celeFade)},100);
+    },1200);
+
+    document.getElementById('question').style.display='none';
+    document.getElementById('celebration').style.display='flex';
+});
+</script>
+</body>
+</html>
